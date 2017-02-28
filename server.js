@@ -10,6 +10,12 @@ const config = require('./webpack.config.js');
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const db = require('./db/db').db;
+const reportCtrl = require('./db/ReportCtrl')
+
+mongoose.connect('mongodb://localhost/test');
 
 if (isDeveloping) {
   const compiler = webpack(config);
@@ -26,8 +32,24 @@ if (isDeveloping) {
     }
   });
 
+  app.use(bodyParser.json())
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
+
+  app.get('/report',
+    reportCtrl.getReports,
+    (req, res) => {
+      console.log("got a report request")
+      res.send(res.locals.reportsFound);
+  })
+
+  app.post('/report',
+    reportCtrl.makeReport,
+    (req, res) => {
+    console.log('got a report post request')
+    res.send();
+  })
+
   app.get('*', function response(req, res) {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
     res.end();
@@ -38,6 +60,8 @@ if (isDeveloping) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
 }
+
+
 
 app.listen(port, '0.0.0.0', function onStart(err) {
   if (err) {
