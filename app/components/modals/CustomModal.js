@@ -15,8 +15,7 @@ const CustomModal = (props) => {
     style={{float: 'right'}}
     onClick={()=>props.dispatch(closeModal())}
     >x</Button>   
-    these are the props.children {props.children}
-    
+    {props.children}
   </ReactModal>
   )
 }

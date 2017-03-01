@@ -8,8 +8,11 @@ import CustomModal from './CustomModal'
 
 const PreviewModal = (props) => {
     return (
-      <CustomModal onAfterOpen={()=>alert("on after open called")}>
-        This is the stuff in between the custom modal tags inside preview modal!
+      <CustomModal>
+        <div>Author: {props.author}</div>
+        <div> Title: {props.title}</div>
+         <div>Subtitle: {props.subtitle}</div>
+         <div>Content: {props.content}</div>
       </CustomModal>
     )
 }

@@ -8,14 +8,17 @@ class ReportsContainer extends Component {
     super(props)
     this.openPreviewModal = this.openPreviewModal.bind(this);
   }
-  componentDidMount() {
-    this.props.dispatch(fetchReports());
-  }
+  // componentDidMount() {
+  //   this.props.dispatch(fetchReports());
+  // }
   openPreviewModal(props) {
-    this.props.dispatch(openModal("PREVIEW", {}))
+    this.props.dispatch(openModal("PREVIEW", props))
   }
   render() {
-    const reports = this.props.reports.map((report, i) => {
+    const filteredReports = this.props.reports.filter(rep => {
+      return rep.author && rep.title && rep.subtitle && rep.content;
+    })
+    const reports = filteredReports.map((report, i) => {
       return <Report 
                 key={i} 
                 report={report}

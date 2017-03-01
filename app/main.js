@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App.js';
-import { Router, Route, hashHistory } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import ReportsContainer from './components/ReportsContainer';
 import CreateReportContainer from './components/CreateReportContainer';
 import { Provider } from 'react-redux';
@@ -12,6 +12,7 @@ import { fetchReports } from './actions/actions'
 import { reducer as formReducer } from 'redux-form';
 import modalReducer from './reducers/modalReducer';
 import ModalRoot from './components/ModalRoot';
+import CustomTable from './components/CustomTable'
 
 const rootReducer = combineReducers({
   modal: modalReducer,
@@ -29,10 +30,12 @@ const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 ReactDOM.render((
   <Provider store={store}>
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
       <Route path='/' component={App}>
+        <IndexRoute component={CreateReportContainer} />
         <Route path='/reports' component={ReportsContainer}/>
         <Route path='/createReport' component={CreateReportContainer}/>
+        <Route path='/table' component={CustomTable}/>
       </Route>
     </Router>
   </Provider>

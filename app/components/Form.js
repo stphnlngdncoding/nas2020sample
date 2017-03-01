@@ -31,7 +31,6 @@ const Form = (props) => {
   )
 }
 
-
 export default reduxForm({
   form: 'createReport',
   validate

@@ -15,7 +15,7 @@ const styles = {
   }
 }
 
-class CreateReportContainer extends Component {
+export class CreateReportContainer extends Component {
   constructor(props) {
     super(props);
     // this.handleTitleChange = this.handleTitleChange.bind(this);

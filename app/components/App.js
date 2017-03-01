@@ -3,26 +3,15 @@ import React from 'react';
 import { Nav, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap';
 import ModalRoot from './ModalRoot'
+import { fetchReports } from '../actions/actions'
+import { connect } from 'react-redux';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {test: 'foo'};
   }
   componentDidMount() {
-    // const request = new Request('http://localhost:3000/report',
-    // {
-    //   headers: new Headers({
-    //     'Content-Type': 'application/json'
-    //   })
-    // })
-    // fetch(request)
-    //   .then((response) => {
-    //     return response.json()
-    //   })
-    //   .then((reports) => {
-    //     this.setState({ reports: reports })
-    //   })
+    this.props.dispatch(fetchReports())
   }
   render() {
     return (
@@ -35,6 +24,9 @@ export default class App extends React.Component {
           <LinkContainer to={{pathname: '/createReport'}}>
             <NavItem eventKey={2}> Create Reports </NavItem>
           </LinkContainer>
+          <LinkContainer to={{pathname: '/table'}}>
+            <NavItem eventKey={3}>View Table</NavItem>
+          </LinkContainer>
         </Nav>
         <div>
           {this.props.children}
@@ -43,3 +35,8 @@ export default class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {reports: state.reducer.reports}
+}
+export default connect(mapStateToProps)(App)
